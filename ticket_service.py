@@ -8,7 +8,7 @@ import ticket
 class TicketResource(object):
     
     def __init__(self):
-        ticket_store = '/Users/$UNAME/Desktop/lottery/tickets/'
+        self.ticket_store = '/Users/$UNAME/GitHub_Repos/lottery/tickets/'
         #create folder if not already exists
         try:
             os.makedirs('tickets')
@@ -37,14 +37,20 @@ class TicketResource(object):
                 resp.body = '{"message": "number of lines should be between 1 and 3"}'
                 resp.status = falcon.HTTP_400
             else:
+                #generate new ticket
                 new_ticket = ticket.Ticket(num_of_lines)
-                #test
-                print new_ticket.ticket_lines
-                resp.body = '{"message": ticket}'
+                #add new ticket to 'tickets' folder
+                filename = str(new_ticket.id) + '.html'
+                with open(os.path.join(self.ticket_store, filename), 'wb') as temp_file:
+                    for line in new_ticket.ticket_lines:
+                        temp_file.write("<body>" + str(line) + "</body>")
+                #return new ticket ID with response
+                resp.body = json.dumps("New ticket generated with " + str(num_of_lines) + " lines, ticket ID = " + str(new_ticket.id))
                 resp.status = falcon.HTTP_200
         else:
             resp.body = '{"message": "number of lines not provided"}'
             resp.status = falcon.HTTP_400
+
         
        
         
