@@ -1,2 +1,2 @@
-# lottery_REST_API_python
-Basic REST API python
+# RESTful_lottery_system_Python
+Lottery system application - RESTful Service
