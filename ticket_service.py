@@ -15,12 +15,19 @@ class TicketResource(object):
         #ignore error related to folder already existing
         except OSError as exception:
             if exception.errno != errno.EEXIST:
-                raise
-        
-        
+                raise      
+
+
     def on_get(self, req, resp):
         if req.get_param("id"):
-            resp.body = resp.body = '{"message": "ID provided"}'
+            ticket_value = ""
+            ticket_id = req.get_param("id")
+            filename = str(ticket_id) + '.html'
+            with open(os.path.join(self.ticket_store, filename), 'r') as ticket:
+                for line in ticket:
+                    ticket_value += line.replace("<p>", "").replace("</p>","\n")   
+            #json.dumps() not using \n           
+            resp.body = ('Ticket ' + ticket_id + ':' + '\n\n' + ticket_value)
             resp.status = falcon.HTTP_200
         else:
             resp.body = resp.body = '{"message": "No ID provided"}'
