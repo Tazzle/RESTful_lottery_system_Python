@@ -9,15 +9,7 @@ import ticket
 class TicketResource(object):
     
     def __init__(self):
-        self.ticket_store = '/Users/$UNAME/GitHub_Repos/lottery/tickets/'
-        #create folder if not already exists
-        try:
-            os.makedirs('tickets')
-        #ignore error related to folder already existing
-        except OSError as exception:
-            if exception.errno != errno.EEXIST:
-                raise      
-
+        #do nothing for now     
 
     def on_get(self, req, resp):
         if req.get_param("id"):
@@ -53,18 +45,10 @@ class TicketResource(object):
     def on_put(self, req, resp):
         if req.get_param("id") and req.get_param("lines"):
             ticket_id = req.get_param("id")
-            num_of_lines = req.get_param("lines")
-            f = open(os.path.join(self.ticket_store, ticket_id + ".html"), 'a')
-            if(f):
-                new_lines = ticket.generate_lines(num_of_lines)
-                for line in new_lines:
-                   f.write("<p>" + str(line) + "</p>")
-                resp.body = json.dumps("Ticket " + ticket_id + " updated with " + num_of_lines + " lines")
-                resp.status = falcon.HTTP_200
-                f.close()
-            else:
-                resp.body = json.dumps("File not found")
-                resp.status = falcon.HTTP_404            
+            num_of_lines = req.get_param_as_int("lines")
+            ticket.modify_ticket_in_xml(ticket_id, num_of_lines)
+            resp.body = json.dumps("Ticket " + ticket_id + " updated with " + str(num_of_lines) + " lines")
+            resp.status = falcon.HTTP_200          
         else:
             resp.body = json.dumps("Expects 2 parameters; 'ID' and 'lines'")
             resp.status = falcon.HTTP_400
@@ -72,6 +56,7 @@ class TicketResource(object):
 
     #todo:
     #refactor
+    #delete http method
     #idempotent. semantics. etc.
     #other parts of requirement doc.
            

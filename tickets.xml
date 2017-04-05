@@ -1,20 +1,38 @@
 <tickets>
     <ticket>
-        <ticket_id>c71e3608-e583-44a3-adaf-e562648a0a90</ticket_id>
-        <ticket_line>[1, 2, 3]</ticket_line>
-        <ticket_line>[2, 3, 2]</ticket_line>
-        <ticket_line>[2, 3, 2]</ticket_line>
-    </ticket>
-    <ticket>
-        <ticket_id>17aaed22-c598-4021-8cc4-637039ec1777</ticket_id>
-        <ticket_line>[1, 2, 3]</ticket_line>
-        <ticket_line>[1, 3, 3]</ticket_line>
-        <ticket_line>[2, 1, 3]</ticket_line>
-    </ticket>
-    <ticket>
-        <ticket_id>e579ca39-159d-4948-90e9-8814d15f7c52</ticket_id>
-        <ticket_line>[1, 1, 1]</ticket_line>
+        <ticket_id>4f238cec-308c-4617-9163-26c6c8db76b5</ticket_id>
+        <ticket_line>[3, 3, 3]</ticket_line>
+        <ticket_line>[1, 1, 3]</ticket_line>
+        <ticket_line>[1, 3, 1]</ticket_line>
+        <ticket_line>[1, 2, 2]</ticket_line>
+        <ticket_line>[3, 1, 2]</ticket_line>
+        <ticket_line>[1, 3, 1]</ticket_line>
+        <ticket_line>[3, 2, 2]</ticket_line>
         <ticket_line>[2, 3, 1]</ticket_line>
-        <ticket_line>[2, 1, 2]</ticket_line>
+        <ticket_line>[1, 1, 1]</ticket_line>
+        <ticket_line>[2, 2, 2]</ticket_line>
+        <ticket_line>[1, 2, 1]</ticket_line>
+        <ticket_line>[2, 3, 1]</ticket_line>
+    </ticket>
+    <ticket>
+        <ticket_id>ff24dcbc-98b6-40cf-a03d-42410662de9a</ticket_id>
+        <ticket_line>[3, 1, 3]</ticket_line>
+        <ticket_line>[1, 3, 1]</ticket_line>
+        <ticket_line>[2, 1, 1]</ticket_line>
+        <ticket_line>[2, 2, 2]</ticket_line>
+        <ticket_line>[2, 1, 3]</ticket_line>
+        <ticket_line>[1, 3, 3]</ticket_line>
+        <ticket_line>[3, 3, 1]</ticket_line>
+        <ticket_line>[2, 3, 1]</ticket_line>
+        <ticket_line>[3, 3, 2]</ticket_line>
+        <ticket_line>[1, 2, 3]</ticket_line>
+        <ticket_line>[3, 2, 2]</ticket_line>
+        <ticket_line>[1, 2, 1]</ticket_line>
+    </ticket>
+    <ticket>
+        <ticket_id>8cc3d3cf-6fb5-4245-8e4c-2b0470dd9816</ticket_id>
+        <ticket_line>[2, 1, 1]</ticket_line>
+        <ticket_line>[3, 1, 2]</ticket_line>
+        <ticket_line>[3, 1, 3]</ticket_line>
     </ticket>
 </tickets>

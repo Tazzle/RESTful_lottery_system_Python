@@ -19,12 +19,22 @@ def get_ticket_from_xml(id):
             ticket_lines = [line.text for line in ticket.iter("ticket_line")]
             return ticket_lines
             break
-                    
-                        
+
+def modify_ticket_in_xml(id, num_of_lines):
+    new_lines = generate_lines(num_of_lines)
+    tree = ET.ElementTree(file="tickets.xml")
+    tickets = tree.getroot()
+    for ticket in tickets:
+        if ticket.find("ticket_id").text == id:
+            for line in new_lines:             
+                child_line = ET.SubElement(ticket, 'ticket_line')
+                child_line.text = str(line)   
+                child_line.tail = '\n'    
+            ET.ElementTree(tickets).write("tickets.xml") 
+            break                      
 
 
 class Ticket():
-
 
     def __init__(self, lines):
         self.ticket_lines = []
