@@ -10,6 +10,19 @@ def generate_lines(num_of_lines):
         addendum.append(line)
     return addendum
 
+def get_ticket_from_xml(id):
+    ticket_lines = []
+    tree = ET.ElementTree(file="tickets.xml")
+    tickets = tree.getroot()
+    for ticket in tickets:
+        if ticket.find("ticket_id").text == id:
+            ticket_lines = [line.text for line in ticket.iter("ticket_line")]
+            return ticket_lines
+            break
+                    
+                        
+
+
 class Ticket():
 
 
@@ -34,6 +47,9 @@ class Ticket():
             child_line.text = str(line)   
             child_line.tail = '\n'                
         ET.ElementTree(xmlRoot).write("tickets.xml")
+
+    
+        
 
 
 

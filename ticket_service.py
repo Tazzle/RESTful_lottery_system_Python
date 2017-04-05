@@ -21,14 +21,9 @@ class TicketResource(object):
 
     def on_get(self, req, resp):
         if req.get_param("id"):
-            ticket_value = ""
             ticket_id = req.get_param("id")
-            filename = str(ticket_id) + '.html'
-            with open(os.path.join(self.ticket_store, filename), 'r') as ticket:
-                for line in ticket:
-                    ticket_value += line.replace("<p>", "").replace("</p>","\n")   
-            #json.dumps() not using \n           
-            resp.body = ('Ticket ' + ticket_id + ':' + '\n\n' + ticket_value)
+            ticket_value = ticket.get_ticket_from_xml(ticket_id)        
+            resp.body = ('Ticket ' + ticket_id + ':' + '\n\n' + str(ticket_value))
             resp.status = falcon.HTTP_200
         else:
             resp.body = resp.body = '{"message": "No ID provided"}'
