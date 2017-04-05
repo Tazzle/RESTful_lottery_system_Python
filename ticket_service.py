@@ -5,6 +5,7 @@ import errno
 import random
 import ticket
 
+
 class TicketResource(object):
     
     def __init__(self):
@@ -35,22 +36,15 @@ class TicketResource(object):
 
     
     def on_post(self, req, resp):
-        #generates new ticket ticket
+        #generates new ticket
         if req.get_param_as_int("lines"):
-            num_of_lines = req.get_param("lines")
-            #number of lines should be between 1 and 3
+            num_of_lines = req.get_param_as_int("lines")
             if(num_of_lines <= 0):
                 resp.body = '{"message": "number of lines should be at least 1"}'
                 resp.status = falcon.HTTP_400
             else:
-                #generate new ticket
                 new_ticket = ticket.Ticket(num_of_lines)
-                #add new ticket to 'tickets' folder
-                filename = str(new_ticket.id) + '.html'
-                with open(os.path.join(self.ticket_store, filename), 'wb') as temp_file:
-                    for line in new_ticket.ticket_lines:
-                        temp_file.write("<p>" + str(line) + "</p>")
-                #return new ticket ID with response
+                new_ticket.add_ticket_to_xml()
                 resp.body = json.dumps("New ticket generated with " + str(num_of_lines) + " lines, ticket ID = " + str(new_ticket.id))
                 resp.status = falcon.HTTP_200
         else:
@@ -79,6 +73,12 @@ class TicketResource(object):
         else:
             resp.body = json.dumps("Expects 2 parameters; 'ID' and 'lines'")
             resp.status = falcon.HTTP_400
+
+
+    #todo:
+    #refactor
+    #idempotent. semantics. etc.
+    #other parts of requirement doc.
            
 
 
