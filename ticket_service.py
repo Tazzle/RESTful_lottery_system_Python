@@ -9,7 +9,8 @@ import ticket
 class TicketResource(object):
     
     def __init__(self):
-        #do nothing for now     
+        #do nothing for now  
+        return   
 
     def on_get(self, req, resp):
         if req.get_param("id"):
@@ -53,10 +54,18 @@ class TicketResource(object):
             resp.body = json.dumps("Expects 2 parameters; 'ID' and 'lines'")
             resp.status = falcon.HTTP_400
 
+    def on_delete(self, req, resp):
+        if req.get_param("id"):
+            ticket_id = req.get_param("id")
+            ticket.delete_ticket_in_xml(ticket_id)
+            resp.body = json.dumps("Ticket " + ticket_id + " deleted")
+            resp.status = falcon.HTTP_200 
+        else:
+            resp.body = resp.body = '{"message": "No ID provided"}'
+            resp.status = falcon.HTTP_400
 
     #todo:
     #refactor
-    #delete http method
     #idempotent. semantics. etc.
     #other parts of requirement doc.
            

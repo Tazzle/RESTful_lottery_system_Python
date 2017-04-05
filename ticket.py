@@ -31,8 +31,17 @@ def modify_ticket_in_xml(id, num_of_lines):
                 child_line.text = str(line)   
                 child_line.tail = '\n'    
             ET.ElementTree(tickets).write("tickets.xml") 
-            break                      
+            break     
 
+def delete_ticket_in_xml(id):
+    tree = ET.ElementTree(file="tickets.xml")
+    tickets = tree.getroot()
+    for ticket in list(tickets):
+        if ticket.find("ticket_id").text == id:
+            tickets.remove(ticket)
+            ET.ElementTree(tickets).write("tickets.xml")
+            break
+        
 
 class Ticket():
 
