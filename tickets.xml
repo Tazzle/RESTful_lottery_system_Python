@@ -21,4 +21,10 @@
         <ticket_line>[3, 1, 3]</ticket_line>
         <ticket_line>[2, 1, 2]</ticket_line>
     </ticket>
+    <ticket>
+        <ticket_id>64d9caba-1428-4c6f-8f80-8a3b7253f5d0</ticket_id>
+        <ticket_line>[2, 1, 1]</ticket_line>
+        <ticket_line>[1, 1, 3]</ticket_line>
+        <ticket_line>[2, 1, 1]</ticket_line>
+    </ticket>
     </tickets>

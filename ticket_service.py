@@ -4,27 +4,25 @@ import os
 import errno
 import random
 import ticket
+import ticket_manager
 
+#use HTTPie (command line HTTP client) to query
 
 class TicketResource(object):
-    
-    def __init__(self):
-        #do nothing for now  
-        return   
-
+      
+    #http GET localhost:8000/ticket?id=64d9caba-1428-4c6f-8f80-8a3b7253f5d0
     def on_get(self, req, resp):
         if req.get_param("id"):
             ticket_id = req.get_param("id")
-            ticket_value = ticket.get_ticket_from_xml(ticket_id)        
+            ticket_value = ticket_manager.get_ticket(ticket_id)        
             resp.body = ('Ticket ' + ticket_id + ':' + '\n\n' + str(ticket_value))
             resp.status = falcon.HTTP_200
         else:
             resp.body = resp.body = '{"message": "No ID provided"}'
             resp.status = falcon.HTTP_400
 
-    
+    #http POST localhost:8000/ticket?lines=6
     def on_post(self, req, resp):
-        #generates new ticket
         if req.get_param_as_int("lines"):
             num_of_lines = req.get_param_as_int("lines")
             if(num_of_lines <= 0):
@@ -32,7 +30,6 @@ class TicketResource(object):
                 resp.status = falcon.HTTP_400
             else:
                 new_ticket = ticket.Ticket(num_of_lines)
-                new_ticket.add_ticket_to_xml()
                 resp.body = json.dumps("New ticket generated with " + str(num_of_lines) + " lines, ticket ID = " + str(new_ticket.id))
                 resp.status = falcon.HTTP_200
         else:
@@ -47,27 +44,24 @@ class TicketResource(object):
         if req.get_param("id") and req.get_param("lines"):
             ticket_id = req.get_param("id")
             num_of_lines = req.get_param_as_int("lines")
-            ticket.modify_ticket_in_xml(ticket_id, num_of_lines)
+            ticket_manager.modify_ticket(ticket_id, num_of_lines)
             resp.body = json.dumps("Ticket " + ticket_id + " updated with " + str(num_of_lines) + " lines")
             resp.status = falcon.HTTP_200          
         else:
             resp.body = json.dumps("Expects 2 parameters; 'ID' and 'lines'")
             resp.status = falcon.HTTP_400
 
+    #http DELETE localhost:8000/ticket?id=64d9caba-1428-4c6f-8f80-8a3b7253f5d0
     def on_delete(self, req, resp):
         if req.get_param("id"):
             ticket_id = req.get_param("id")
-            ticket.delete_ticket_in_xml(ticket_id)
+            ticket_manager.delete_ticket(ticket_id)
             resp.body = json.dumps("Ticket " + ticket_id + " deleted")
             resp.status = falcon.HTTP_200 
         else:
             resp.body = resp.body = '{"message": "No ID provided"}'
             resp.status = falcon.HTTP_400
 
-    #todo:
-    #refactor
-    #idempotent. semantics. etc.
-    #other parts of requirement doc.
            
 
 
